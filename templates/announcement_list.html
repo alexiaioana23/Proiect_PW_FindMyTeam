@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">Announcements</h1>
+
+<a
+    href="/announcements/create/"
+    class="btn btn-primary mb-4"
+>
+    Create Announcement
+</a>
+
+<div class="row">
+
+{% for announcement in announcements %}
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card bg-black text-light h-100">
+
+            <div class="card-body">
+
+                <h3>
+                    {{ announcement.title }}
+                </h3>
+
+                <p>
+                    <strong>Category:</strong>
+                    {{ announcement.category }}
+                </p>
+
+                <p>
+                    {{ announcement.content|truncatewords:20 }}
+                </p>
+
+                <a
+                    href="/announcements/{{ announcement.id }}/"
+                    class="btn btn-outline-light"
+                >
+                    Read More
+                </a>
+
+                <a
+                    href="/announcements/{{ announcement.id }}/report/"
+                    class="btn btn-danger"
+                >
+                    Report
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

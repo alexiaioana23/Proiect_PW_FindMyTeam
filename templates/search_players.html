@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">
+
+    Caută coechipieri
+
+</h1>
+
+<form method="GET" class="card bg-black border border-secondary p-4 mb-5">
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <label class="form-label">
+
+                Rank
+
+            </label>
+
+            <select
+                name="rank"
+                class="form-select"
+            >
+
+                <option value="">
+                    Toate rank-urile
+                </option>
+
+                {% for value, label in ranks %}
+
+                    <option
+                        value="{{ value }}"
+                        {% if selected_rank == value %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ label }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="col-md-5">
+
+            <label class="form-label">
+
+                Rol
+
+            </label>
+
+            <select
+                name="role"
+                class="form-select"
+            >
+
+                <option value="">
+                    Toate rolurile
+                </option>
+
+                {% for value, label in roles %}
+
+                    <option
+                        value="{{ value }}"
+                        {% if selected_role == value %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ label }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+
+            <button class="btn btn-primary w-100">
+
+                Aplică Filtre
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="mt-3">
+
+        <a
+            href="/users/search/"
+            class="btn btn-outline-light btn-sm"
+        >
+
+            Reset
+
+        </a>
+
+    </div>
+
+</form>
+
+{% if profiles %}
+
+    <div class="row">
+
+        {% for profile in profiles %}
+
+            <div class="col-md-6 mb-4">
+
+                <div class="card bg-black text-light border border-secondary shadow h-100">
+
+                    <div class="card-body">
+
+                        <h3 class="mb-3">
+
+                            {{ profile.cs2_nickname }}
+
+                        </h3>
+
+                        <p>
+
+                            <span class="badge bg-primary">
+
+                                {{ profile.rank }}
+
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Primary Role:</strong>
+
+                            {% if profile.primary_role == selected_role %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    {{ profile.primary_role }}
+
+                                </span>
+
+                            {% else %}
+
+                                {{ profile.primary_role }}
+
+                            {% endif %}
+
+                        </p>
+
+                        <p>
+
+                            <strong>Secondary Role:</strong>
+
+                            {% if profile.secondary_role == selected_role %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    {{ profile.secondary_role }}
+
+                                </span>
+
+                            {% else %}
+
+                                {{ profile.secondary_role }}
+
+                            {% endif %}
+
+                        </p>
+
+                        <p class="text-secondary">
+
+                            Languages:
+                            {{ profile.languages }}
+
+                        </p>
+
+                        <a
+                            href="/users/player/{{ profile.id }}/"
+                            class="btn btn-outline-light btn-sm me-2"
+                        >
+
+                            Vezi Profil
+
+                        </a>
+
+                        <a
+                            href="/messages/start/{{ profile.user.id }}/?invite=1"
+                            class="btn btn-success btn-sm"
+                        >
+
+                            Trimite Invitație
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% else %}
+
+    {% if selected_rank %}
+
+        <div class="alert alert-warning">
+
+            Ne pare rău, nu am găsit jucători
+            cu acest rank.
+
+            Încearcă să extinzi căutarea.
+
+        </div>
+
+    {% elif selected_role %}
+
+        <div class="alert alert-warning">
+
+            Momentan nu există
+            {{ selected_role }}
+            online.
+
+            Încearcă să cauți
+            un rol secundar apropiat.
+
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-warning">
+
+            Nu există jucători.
+
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}

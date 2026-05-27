@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ profile.cs2_nickname }}</h1>
+
+<p>Rank: {{ profile.rank }}</p>
+
+<p>Primary Role: {{ profile.primary_role }}</p>
+
+<p>Secondary Role: {{ profile.secondary_role }}</p>
+
+<p>Languages: {{ profile.languages }}</p>
+
+<a
+    href="/messages/start/{{ profile.user.id }}/"
+    class="btn btn-primary mt-3"
+>
+    Send Message
+</a>
+    
+<br><br>
+
+<a
+    href="/users/report/{{ profile.user.id }}/"
+    class="btn btn-danger mt-3"
+>
+    Report Player
+</a>
+    
+{% endblock %}

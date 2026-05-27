@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+        <div class="card bg-black text-light p-4">
+
+            <h1 class="mb-4">
+                Report {{ reported_user.username }}
+            </h1>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <select
+                    name="reason"
+                    class="form-select mb-3"
+                >
+
+                    <option value="Fake Rank">
+                        Fake Rank
+                    </option>
+
+                    <option value="Toxic">
+                        Toxic
+                    </option>
+
+                    <option value="Spam">
+                        Spam
+                    </option>
+
+                </select>
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+                    Submit Report
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card bg-black text-light border border-secondary p-5 shadow">
+
+    <h1 class="mb-4">
+
+        My Profile
+
+    </h1>
+
+    <hr>
+
+    {% if profile.avatar %}
+
+    <img
+        src="{{ profile.avatar.url }}"
+        class="rounded-circle mb-4"
+        width="150"
+        height="150"
+        style="
+            object-fit: cover;
+            border: 3px solid #0d6efd;
+            box-shadow: 0 0 20px rgba(13,110,253,0.5);
+        "
+    >
+
+    {% endif %}
+
+    <h3 class="mb-4">
+
+        {{ profile.cs2_nickname }}
+
+    </h3>
+
+    <p>
+
+        <strong>Rank:</strong>
+
+        <span class="badge bg-primary">
+
+            {{ profile.rank }}
+
+        </span>
+
+        <button
+            class="btn btn-sm btn-outline-light ms-2"
+            onclick="toggleRankEdit()"
+        >
+
+            ✏️
+
+        </button>
+
+    </p>
+
+    <div
+        id="rank-edit"
+        style="display:none;"
+        class="mt-3 mb-4"
+    >
+
+        <form method="POST" action="/users/edit-profile/">
+
+            {% csrf_token %}
+
+            <label class="form-label">
+                Select New Rank
+            </label>
+
+            <select
+                name="rank"
+                class="form-select mb-3"
+                id="rank-select"
+                onchange="checkRank()"
+            >
+
+                <option value="{{ profile.rank }}">
+                    {{ profile.rank }}
+                </option>
+
+                <option value="Silver">
+                    Silver
+                </option>
+
+                <option value="Gold Nova">
+                    Gold Nova
+                </option>
+
+                <option value="Master Guardian">
+                    Master Guardian
+                </option>
+
+                <option value="Legendary Eagle">
+                    Legendary Eagle
+                </option>
+
+                <option value="Global Elite">
+                    Global Elite
+                </option>
+
+            </select>
+
+            <input
+                type="hidden"
+                name="cs2_nickname"
+                value="{{ profile.cs2_nickname }}"
+            >
+
+            <input
+                type="hidden"
+                name="primary_role"
+                value="{{ profile.primary_role }}"
+            >
+
+            <input
+                type="hidden"
+                name="secondary_role"
+                value="{{ profile.secondary_role }}"
+            >
+
+            <input
+                type="hidden"
+                name="languages"
+                value="{{ profile.languages }}"
+            >
+
+            <button
+                type="submit"
+                class="btn btn-success"
+                id="update-btn"
+                disabled
+            >
+
+                Actualizează
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <p>
+
+        <strong>Primary Role:</strong>
+
+        {{ profile.primary_role }}
+
+    </p>
+
+    <p>
+
+        <strong>Secondary Role:</strong>
+
+        {{ profile.secondary_role }}
+
+    </p>
+
+    <p>
+
+        <strong>Languages:</strong>
+
+        {{ profile.languages }}
+
+    </p>
+
+    <p class="text-secondary">
+
+        Last Updated:
+        {{ profile.updated_at }}
+
+    </p>
+
+    <a
+        href="/users/edit-profile/"
+        class="btn btn-primary mt-4"
+    >
+
+        Edit Profile
+
+    </a>
+
+</div>
+
+<script>
+
+function toggleRankEdit() {
+
+    const section = document.getElementById('rank-edit');
+
+    if (section.style.display === 'none') {
+
+        section.style.display = 'block';
+
+    } else {
+
+        section.style.display = 'none';
+
+    }
+
+}
+
+function checkRank() {
+
+    const currentRank = "{{ profile.rank }}";
+
+    const selectedRank =
+        document.getElementById('rank-select').value;
+
+    const button =
+        document.getElementById('update-btn');
+
+    if (selectedRank === currentRank) {
+
+        button.disabled = true;
+
+    } else {
+
+        button.disabled = false;
+
+    }
+
+}
+
+</script>
+
+{% endblock %}

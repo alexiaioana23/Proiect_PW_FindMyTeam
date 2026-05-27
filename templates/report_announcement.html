@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card bg-black text-light border-secondary">
+
+        <div class="card-body">
+
+            <h1 class="mb-4">
+                Report Announcement
+            </h1>
+
+            <h4>
+                {{ announcement.title }}
+            </h4>
+
+            <p>
+                {{ announcement.content }}
+            </p>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <textarea
+                    name="reason"
+                    class="form-control bg-dark text-light border-secondary"
+                    placeholder="Write the reason..."
+                    required
+                ></textarea>
+
+                <br>
+
+                <button class="btn btn-danger">
+                    Report
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

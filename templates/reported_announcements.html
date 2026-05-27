@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    Reported Announcements
+</h1>
+
+{% for report in reports %}
+
+    <div class="card bg-black text-light mb-3">
+
+        <div class="card-body">
+
+            <h4>
+                {{ report.announcement.title }}
+            </h4>
+
+            <p>
+                {{ report.reason }}
+            </p>
+
+            <p>
+                Reported by:
+                {{ report.reported_by.username }}
+            </p>
+
+            <a
+                href="/announcements/delete-report/{{ report.id }}/"
+                class="btn btn-danger"
+            >
+                Delete Announcement
+            </a>
+
+        </div>
+
+    </div>
+
+{% endfor %}
+
+{% endblock %}

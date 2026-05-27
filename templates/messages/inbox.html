@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">
+        Messages
+    </h1>
+
+    {% for conversation in conversations %}
+
+        {% for participant in conversation.participants.all %}
+
+            {% if participant != request.user %}
+
+                <a
+                    href="{% url 'conversation_detail' conversation.id %}"
+                    class="text-decoration-none"
+                >
+
+                    <div
+                        class="
+                            card
+                            bg-dark
+                            border-secondary
+                            mb-3
+                            shadow-sm
+                        "
+                    >
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <h5
+                                        class="
+                                            text-light
+                                            mb-1
+
+                                            {% if conversation.unread_messages > 0 %}
+                                                fw-bold
+                                            {% endif %}
+                                        "
+                                    >
+
+                                        {{ participant.username }}
+
+                                    </h5>
+
+                                    <p class="text-secondary mb-0">
+
+                                        {{ conversation.messages.last.content|truncatechars:40 }}
+
+                                    </p>
+
+                                </div>
+
+                                <div class="text-end">
+
+                                    {% if conversation.unread_messages > 0 %}
+
+                                        <span class="badge bg-danger">
+
+                                            {{ conversation.unread_messages }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            {% endif %}
+
+        {% endfor %}
+
+    {% empty %}
+
+        <div class="text-secondary">
+
+            No conversations yet.
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card bg-dark border-secondary shadow">
+
+        <div class="card-header text-light d-flex justify-content-between">
+
+            <h5 class="mb-0">
+                Chat with {{ other_user.username }}
+            </h5>
+
+        </div>
+
+        <div
+            class="card-body"
+            id="chat-box"
+            style="
+                height: 500px;
+                overflow-y: auto;
+                background-color: #1f242b;
+            "
+        >
+
+            {% for chat_message in messages %}
+
+                <div class="mb-3">
+
+                    {% if chat_message.sender == request.user %}
+
+                        <div class="text-end">
+
+                            <small class="text-secondary">
+                                You
+                            </small>
+
+                            <br>
+
+                            <div
+                                class="
+                                    d-inline-block
+                                    bg-primary
+                                    text-white
+                                    p-3
+                                    rounded
+                                    shadow-sm
+                                "
+                                style="
+                                    max-width: 70%;
+                                    word-wrap: break-word;
+                                "
+                            >
+
+                                {{ chat_message.content }}
+
+                            </div>
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{ chat_message.timestamp|date:"d M Y H:i" }}
+
+                            </small>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="text-start">
+
+                            <small class="text-secondary">
+
+                                {{ other_user.username }}
+
+                            </small>
+
+                            <br>
+
+                            <div
+                                class="
+                                    d-inline-block
+                                    bg-secondary
+                                    text-light
+                                    p-3
+                                    rounded
+                                    shadow-sm
+                                "
+                                style="
+                                    max-width: 70%;
+                                    word-wrap: break-word;
+                                "
+                            >
+
+                                {{ chat_message.content }}
+
+                            </div>
+
+                            <br>
+
+                            <small class="text-muted">
+
+                                {{ chat_message.timestamp|date:"d M Y H:i" }}
+
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% empty %}
+
+                <div class="text-center text-secondary mt-5">
+
+                    No messages yet.
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="card-footer bg-dark border-top border-secondary">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        name="content"
+                        class="form-control bg-dark text-light border-secondary"
+                        placeholder="Write a message..."
+                        required
+                        autocomplete="off"
+                    >
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        Send
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const chatBox =
+        document.getElementById('chat-box');
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+</script>
+
+{% endblock %}

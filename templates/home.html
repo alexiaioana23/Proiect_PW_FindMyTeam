@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.hero-section {
+
+    text-align: center;
+    padding: 100px 20px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.75),
+            rgba(0,0,0,0.85)
+        ),
+        url('https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=2070');
+
+    background-size: cover;
+    background-position: center;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 25px rgba(0, 123, 255, 0.25);
+
+}
+
+.hero-title {
+
+    font-size: 5rem;
+    font-weight: 900;
+
+    color: white;
+
+    text-shadow:
+        0 0 20px #0d6efd;
+
+}
+
+.hero-text {
+
+    font-size: 1.3rem;
+
+    color: #cfcfcf;
+
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+}
+
+.glow-btn {
+
+    padding: 14px 35px;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+
+}
+
+.glow-btn:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 20px rgba(13,110,253,0.6);
+
+}
+
+.stats-card {
+
+    background: #111;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 18px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,0.4);
+
+}
+
+.stats-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 0 25px rgba(13,110,253,0.25);
+
+}
+
+.stats-number {
+
+    font-size: 3rem;
+
+    font-weight: 900;
+
+    color: #0d6efd;
+
+}
+
+.feature-card {
+
+    background: #111;
+
+    border-radius: 18px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    transition: 0.3s;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+}
+
+.feature-card:hover {
+
+    transform: scale(1.03);
+
+    box-shadow:
+        0 0 25px rgba(13,110,253,0.2);
+
+}
+
+.feature-icon {
+
+    font-size: 3rem;
+
+    margin-bottom: 20px;
+
+}
+
+</style>
+
+<div class="hero-section mb-5">
+
+    <h1 class="hero-title">
+
+        FindMyTeam
+
+    </h1>
+
+    <p class="hero-text">
+
+        Find teammates, create elite squads
+        and dominate CS2 together.
+
+    </p>
+
+    {% if user.is_authenticated %}
+
+        <a
+            href="/users/search/"
+            class="btn btn-primary glow-btn me-3"
+        >
+
+            Find Players
+
+        </a>
+
+        <a
+            href="/teams/"
+            class="btn btn-outline-light glow-btn"
+        >
+
+            Browse Teams
+
+        </a>
+
+    {% else %}
+
+        <a
+            href="/users/register/"
+            class="btn btn-primary glow-btn me-3"
+        >
+
+            Get Started
+
+        </a>
+
+        <a
+            href="/accounts/login/"
+            class="btn btn-outline-light glow-btn"
+        >
+
+            Login
+
+        </a>
+
+    {% endif %}
+
+</div>
+
+<div class="row mb-5">
+
+    <div class="col-md-4 mb-4">
+
+        <div class="stats-card">
+
+            <div class="stats-number">
+
+                {{ total_players }}
+
+            </div>
+
+            <p>Total Players</p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-4">
+
+        <div class="stats-card">
+
+            <div class="stats-number">
+
+                {{ total_teams }}
+
+            </div>
+
+            <p>Total Teams</p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-4">
+
+        <div class="stats-card">
+
+            <div class="stats-number">
+
+                {{ total_announcements }}
+
+            </div>
+
+            <p>Announcements</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-4 mb-4">
+
+        <div class="feature-card h-100">
+
+            <div class="feature-icon">
+
+                🎯
+
+            </div>
+
+            <h3>
+
+                Players
+
+            </h3>
+
+            <p>
+
+                Search teammates based
+                on rank and role.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-4">
+
+        <div class="feature-card h-100">
+
+            <div class="feature-icon">
+
+                🛡️
+
+            </div>
+
+            <h3>
+
+                Teams
+
+            </h3>
+
+            <p>
+
+                Build elite squads and
+                recruit new players.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-4">
+
+        <div class="feature-card h-100">
+
+            <div class="feature-icon">
+
+                💬
+
+            </div>
+
+            <h3>
+
+                Messaging
+
+            </h3>
+
+            <p>
+
+                Communicate directly
+                with teammates instantly.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}  

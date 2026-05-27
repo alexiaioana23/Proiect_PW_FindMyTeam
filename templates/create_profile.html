@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card bg-black text-light border border-secondary p-5 shadow">
+
+    <h1 class="mb-4">
+
+        Create Your Profile
+
+    </h1>
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="profile-form"
+    >
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                CS2 Nickname
+
+            </label>
+
+            {{ form.cs2_nickname }}
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                Rank
+
+            </label>
+
+            {{ form.rank }}
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                Primary Role
+
+            </label>
+
+            {{ form.primary_role }}
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                Secondary Role
+
+            </label>
+
+            {{ form.secondary_role }}
+
+        </div>
+
+        <div class="mb-4">
+
+            <label class="form-label">
+
+                Languages
+
+            </label>
+
+            {{ form.languages }}
+
+        </div>
+
+        <div
+            id="alert-box"
+            class="alert alert-warning"
+            style="display:none;"
+        >
+
+            Te rugăm să alegi un rol/rank
+            pentru a putea fi găsit de alți jucători.
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+            id="submit-btn"
+            disabled
+        >
+
+            Finalizare Profil
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+function validateForm() {
+
+    const rank =
+        document.getElementById('id_rank').value;
+
+    const role =
+        document.getElementById('id_primary_role').value;
+
+    const button =
+        document.getElementById('submit-btn');
+
+    const alertBox =
+        document.getElementById('alert-box');
+
+    if (rank && role) {
+
+        button.disabled = false;
+
+        alertBox.style.display = 'none';
+
+    } else {
+
+        button.disabled = true;
+
+        alertBox.style.display = 'block';
+
+    }
+
+}
+
+document
+    .getElementById('id_rank')
+    .addEventListener('change', validateForm);
+
+document
+    .getElementById('id_primary_role')
+    .addEventListener('change', validateForm);
+
+validateForm();
+
+</script>
+
+{% endblock %}
